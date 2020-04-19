@@ -13,51 +13,32 @@ export default class Schema {
     init() {
         let keys = Object.keys(this.schema);
         for (const key of keys) {
-            // console.log(key, this.schema[key].validators);
-            // this.generateValidators(key, this.schema[key].validators);
+            this.sanitizeMessages(key, this.schema[key].validators);
         }
     }
 
     /**
-     * Generate Validators
+     * Sanitize Error Messages
      * 
      * @param {String} field 
      * @param {Object} validators 
      */
-    generateValidators(field, validators) {
+    sanitizeMessages(field, validators) {
         for (const validator of validators) {
-            if (!validator.message) {
-                this.populateMessage(field, validator);
+            if (validator.message) {
+                this.populatePlaceholders(field, validator);
             }
         }
     }
 
     /**
-     * Populate Message for Validators without Message
+     * Populate Placeholder
      * 
      * @param {String} field 
      * @param {Object} validator 
      */
-    populateMessage(field, validator) {
-        switch (validator.type) {
-            case STRING_VALIDATOR_TYPES.EMAIL:
-                validator.message = string_email_error_message();
-                break;
-            case STRING_VALIDATOR_TYPES.EQUAL:
-                validator.message = string_equal_error_message(field, validator.value);
-                break;
-            case STRING_VALIDATOR_TYPES.IN:
-                validator.message = string_in_error_message(field, validator.value);
-                break;
-            case STRING_VALIDATOR_TYPES.MAXLENGTH:
-                validator.message = string_maxlength_error_message(field, validator.value);
-                break;
-            case STRING_VALIDATOR_TYPES.MINLENGTH:
-                validator.message = string_minlength_error_message(field, validator.value);
-                break;
-            case STRING_VALIDATOR_TYPES.REQUIRED:
-                validator.message = string_required_error_message(field);
-                break;
-        }
+    populatePlaceholders(field, validator) {
+        validator.message = validator.message.replace("${{}}", field);
     }
+
 }
