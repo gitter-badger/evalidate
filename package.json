@@ -1,7 +1,7 @@
 {
-  "name": "derify",
+  "name": "evalidate",
   "version": "1.0.0",
-  "description": "Derify Validator",
+  "description": "Schema based validator.",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aderabiruk/derify.git"
+    "url": "git+https://github.com/aderabiruk/evalidate.git"
   },
   "keywords": [
     "validator",
@@ -24,9 +24,9 @@
   "author": "Biruk Adera",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aderabiruk/derify/issues"
+    "url": "https://github.com/aderabiruk/evalidate/issues"
   },
-  "homepage": "https://github.com/aderabiruk/derify#readme",
+  "homepage": "https://github.com/aderabiruk/evalidate#readme",
   "dependencies": {
     "validator": "^13.0.0"
   },
