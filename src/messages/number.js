@@ -16,7 +16,7 @@ export const number_in_error_message = () => {
  * Integer Error Message
  */
 export const number_integer_error_message = () => {
-    return "${{}} must be an integer.";
+    return "${{}} must be an integer";
 };
 
 /**
@@ -37,5 +37,5 @@ export const number_min_error_message = (value) => {
  * Required Error Message
  */
 export const number_required_error_message = () => {
-    return `\${{}} is required.`;
+    return `\${{}} is required`;
 };

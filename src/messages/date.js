@@ -2,7 +2,7 @@
  * Equal Error Message
  */
 export const date_equal_error_message = () => {
-    return "Incorrect ${{}} value provided.";
+    return "Incorrect ${{}} value provided";
 };
 
 /**
@@ -23,5 +23,5 @@ export const date_before_error_message = (value) => {
  * Required Error Message
  */
 export const date_required_error_message = () => {
-    return `\${{}} is required.`;
+    return `\${{}} is required`;
 };

@@ -44,5 +44,5 @@ export const string_minlength_error_message = (value) => {
  * 
  */
 export const string_required_error_message = () => {
-    return `\${{}} is required.`;
+    return `\${{}} is required`;
 };
