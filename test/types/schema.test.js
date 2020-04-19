@@ -539,4 +539,82 @@ describe("Schema", () => {
         });
     
     });
+
+    describe("init", () => {
+        let schema;
+
+        beforeAll(() => {
+            schema = new Schema({
+                name: string().required('Name is required!'),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                age: number().required("Age is required!").min(0).max(100)
+            });
+        });
+
+        it("Should Generate Schema", () => {
+            expect(schema.schema["name"]).toBeTruthy();
+            expect(schema.schema["name"].validators).toContainEqual({
+                type: STRING_VALIDATOR_TYPES.REQUIRED,
+                message: 'Name is required!'
+            });
+
+            expect(schema.schema["email"]).toBeTruthy();
+            expect(schema.schema["email"].validators).toContainEqual({
+                type: STRING_VALIDATOR_TYPES.EMAIL,
+                message: string_email_error_message()
+            });
+            expect(schema.schema["email"].validators).toContainEqual({
+                type: STRING_VALIDATOR_TYPES.REQUIRED,
+                message: "Email is required!"
+            });
+
+            expect(schema.schema["status"]).toBeTruthy();
+            expect(schema.schema["status"].validators).toContainEqual({
+                type: STRING_VALIDATOR_TYPES.REQUIRED,
+                message: "Status is required!"
+            });
+            expect(schema.schema["status"].validators).toContainEqual({
+                value: ["Active", "Deactive"],
+                type: STRING_VALIDATOR_TYPES.IN,
+                message: string_in_error_message()
+            });
+
+            expect(schema.schema["age"]).toBeTruthy();
+            expect(schema.schema["age"].validators).toContainEqual({
+                type: NUMBER_VALIDATOR_TYPES.REQUIRED,
+                message: "Age is required!"
+            });
+            expect(schema.schema["age"].validators).toContainEqual({
+                value: 100,
+                type: NUMBER_VALIDATOR_TYPES.MAX,
+                message: number_max_error_message(100)
+            });
+            expect(schema.schema["age"].validators).toContainEqual({
+                value: 0,
+                type: NUMBER_VALIDATOR_TYPES.MIN,
+                message: number_min_error_message(0)
+            });
+        });
+
+        it("Should Replace Fields", () => {
+            schema.init();
+            expect(schema.schema["age"].validators).toContainEqual({
+                value: 100,
+                type: NUMBER_VALIDATOR_TYPES.MAX,
+                message: 'age must be less than 100'
+            });
+            expect(schema.schema["age"].validators).toContainEqual({
+                value: 0,
+                type: NUMBER_VALIDATOR_TYPES.MIN,
+                message: 'age must be greater than 0'
+            });
+            expect(schema.schema["status"].validators).toContainEqual({
+                value: ["Active", "Deactive"],
+                type: STRING_VALIDATOR_TYPES.IN,
+                message: 'Incorrect status value provided'
+            });
+        });
+
+    });
 });
