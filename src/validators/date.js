@@ -1,6 +1,13 @@
 import moment from "moment";
 import { DATE_VALIDATOR_TYPES } from "../utils/constants";
 
+/**
+ * Handle Date Validations
+ * 
+ * @param {String} field 
+ * @param {Object} validator 
+ * @param {Object} value
+ */
 export const handleDateValidation = (field, validator, value) => {
     let errors = [];
     if (value && isDate(value)) {

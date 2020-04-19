@@ -1,7 +1,7 @@
 import { NUMBER_VALIDATOR_TYPES } from "../utils/constants";
 
 /**
- * Handle String Validations
+ * Handle Number Validations
  * 
  * @param {String} field 
  * @param {Object} validator 

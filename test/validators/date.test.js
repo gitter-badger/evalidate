@@ -1,7 +1,8 @@
+import moment from 'moment';
+
 import date from '../../src/types/date';
 import { isDate, handleDateValidation } from '../../src/validators/date';
 import { date_required_error_message, date_equal_error_message, date_after_error_message, date_before_error_message } from '../../src/messages/date';
-import moment from 'moment';
 
 describe("Date Validator", () => {
 
