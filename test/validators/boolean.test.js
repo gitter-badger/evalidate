@@ -29,6 +29,11 @@ describe("Date Validator", () => {
             expect(handleBooleanValidation("field", validator.validators[0], true).length).toBe(0);
         });
 
+        it("Shouldn't return error if input isn't required and value isn't provided", () => {
+            let validator = boolean().equals(true);
+            expect(handleBooleanValidation("field", validator.validators[0], null).length).toBe(0);
+        });
+
     });
 
     describe("isBoolean", () => {

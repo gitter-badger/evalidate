@@ -29,6 +29,11 @@ describe("Number Validator", () => {
             expect(handleNumberValidation("field", validator.validators[0], 10).length).toBe(0);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = number().equals(10);
+            expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
+        });
+
         it("Should return error if input is in value", () => {
             let validator = number().in([1,2,3]);
             expect(handleNumberValidation("field", validator.validators[0], 5)).toContainEqual({
@@ -39,6 +44,11 @@ describe("Number Validator", () => {
         it("Shouldn't return error if input isn't in value", () => {
             let validator = number().in([1,2,3]);
             expect(handleNumberValidation("field", validator.validators[0], 1).length).toBe(0);
+        });
+
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = number().in([1,2,3]);
+            expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
         });
 
         it("Should return error if input isn't integer", () => {
@@ -53,6 +63,11 @@ describe("Number Validator", () => {
             expect(handleNumberValidation("field", validator.validators[0], 1).length).toBe(0);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = number().integer();
+            expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
+        });
+
         it("Should return error if input is above value", () => {
             let validator = number().max(20);
             expect(handleNumberValidation("field", validator.validators[0], 21)).toContainEqual({
@@ -65,6 +80,11 @@ describe("Number Validator", () => {
             expect(handleNumberValidation("field", validator.validators[0], 20).length).toBe(0);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = number().max(20);
+            expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
+        });
+
         it("Should return error if input is below value", () => {
             let validator = number().min(20);
             expect(handleNumberValidation("field", validator.validators[0], 19)).toContainEqual({
@@ -75,6 +95,11 @@ describe("Number Validator", () => {
         it("Shouldn't return error if input isn't below value", () => {
             let validator = number().min(20);
             expect(handleNumberValidation("field", validator.validators[0], 20).length).toBe(0);
+        });
+
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = number().min(20);
+            expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
         });
     });
     

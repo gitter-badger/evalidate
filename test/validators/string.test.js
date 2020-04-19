@@ -29,6 +29,11 @@ describe("String Validator", () => {
             expect(handleStringValidation("field", validator.validators[0], 'aderabiruk@gmail.com')).toEqual([]);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = string().email();
+            expect(handleStringValidation("field", validator.validators[0], null)).toEqual([]);
+        });
+
         it("Should return error if value matches required value", () => {
             let validator = string().equals("12345");
             expect(handleStringValidation("field", validator.validators[0], 'invalid-email')).toContainEqual({
@@ -39,6 +44,11 @@ describe("String Validator", () => {
         it("Shouldn't return error if value matches required value", () => {
             let validator = string().equals("12345");
             expect(handleStringValidation("field", validator.validators[0], '12345')).toEqual([]);
+        });
+
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = string().equals("12345");
+            expect(handleStringValidation("field", validator.validators[0], null)).toEqual([]);
         });
 
         it("Should return error if value is not in provided array", () => {
@@ -53,6 +63,10 @@ describe("String Validator", () => {
             expect(handleStringValidation("field", validator.validators[0], 'Stopped')).toEqual([]);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = string().in(["Running", "Stopped"]);
+            expect(handleStringValidation("field", validator.validators[0], null)).toEqual([]);
+        });
 
         it("Should return error if length is greater than maxlength", () => {
             let validator = string().maxlength(5);
@@ -66,6 +80,11 @@ describe("String Validator", () => {
             expect(handleStringValidation("field", validator.validators[0], '12345')).toEqual([]);
         });
 
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = string().maxlength(5);
+            expect(handleStringValidation("field", validator.validators[0], null)).toEqual([]);
+        });
+
         it("Should return error if length is less than minlength", () => {
             let validator = string().minlength(5);
             expect(handleStringValidation("field", validator.validators[0], 'a')).toContainEqual({
@@ -76,6 +95,11 @@ describe("String Validator", () => {
         it("Should return error if length is greater than minlength", () => {
             let validator = string().minlength(5);
             expect(handleStringValidation("field", validator.validators[0], '12345')).toEqual([]);
+        });
+
+        it("Shouldn't return error if input isn't required and value is not passed", () => {
+            let validator = string().minlength(5);
+            expect(handleStringValidation("field", validator.validators[0], null)).toEqual([]);
         });
 
     });

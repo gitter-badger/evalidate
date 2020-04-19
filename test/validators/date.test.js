@@ -26,10 +26,16 @@ describe("Date Validator", () => {
             });
         });
 
-        it("Shouldn't return error input is equal to value", () => {
+        it("Shouldn't return error if input is equal to value", () => {
             let input = new Date();
             let validator = date().equals(input);
             expect(handleDateValidation("field", validator.validators[0], input).length).toBe(0);
+        });
+
+        it("Shouldn't return error if input is not required and value is not passed", () => {
+            let input = new Date();
+            let validator = date().equals(input);
+            expect(handleDateValidation("field", validator.validators[0], null).length).toBe(0);
         });
 
         it("Should return error if input isn't after value", () => {
@@ -40,24 +46,36 @@ describe("Date Validator", () => {
             });
         });
 
-        it("Shouldn't return error input is after value", () => {
+        it("Shouldn't return error if input is after value", () => {
             let input = moment();
             let validator = date().after(input);
             expect(handleDateValidation("field", validator.validators[0], moment()).length).toBe(0);
         });
 
+        it("Shouldn't return error if input is not required and vallue is not passed", () => {
+            let input = moment();
+            let validator = date().after(input);
+            expect(handleDateValidation("field", validator.validators[0], null).length).toBe(0);
+        });
+
         it("Should return error if input isn't before value", () => {
             let input = moment();
             let validator = date().before(input);
-            expect(handleDateValidation("field", validator.validators[0], moment())).toContainEqual({
+            expect(handleDateValidation("field", validator.validators[0], moment().add(1, 'hours'))).toContainEqual({
                 field: "field", message: date_before_error_message(input)
             });
         });
 
-        it("Shouldn't return error input is before value", () => {
+        it("Shouldn't return error if input is before value", () => {
             let input = moment();
             let validator = date().before(input);
             expect(handleDateValidation("field", validator.validators[0], moment().subtract(1, 'hours')).length).toBe(0);
+        });
+
+        it("Shouldn't return error if input is not required and value is not passed", () => {
+            let input = moment();
+            let validator = date().before(input);
+            expect(handleDateValidation("field", validator.validators[0], null).length).toBe(0);
         });
 
     });
