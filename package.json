@@ -1,0 +1,41 @@
+{
+  "name": "derify",
+  "version": "1.0.0",
+  "description": "Derify Validator",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "lint": "eslint src test",
+    "test": "jest --verbose --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aderabiruk/derify.git"
+  },
+  "keywords": [
+    "validator",
+    "validation",
+    "validator",
+    "schema",
+    "joi",
+    "express"
+  ],
+  "author": "Biruk Adera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aderabiruk/derify/issues"
+  },
+  "homepage": "https://github.com/aderabiruk/derify#readme",
+  "dependencies": {
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "eslint": "^6.8.0",
+    "jest": "^25.3.0",
+    "regenerator-runtime": "^0.13.5"
+  }
+}
