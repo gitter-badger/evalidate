@@ -2,7 +2,7 @@
  * Email Error Message
  */
 export const string_email_error_message = () => {
-    return "Invalid email address";
+    return "Email address is invalid";
 };
 
 /**
@@ -10,7 +10,7 @@ export const string_email_error_message = () => {
  * 
  */
 export const string_equal_error_message = () => {
-    return `Incorrect \${{}} value provided`;
+    return `Invalid value provided for \${{}}`;
 };
 
 /**
@@ -18,7 +18,7 @@ export const string_equal_error_message = () => {
  *  
  */
 export const string_in_error_message = () => {
-    return `Incorrect \${{}} value provided`;
+    return `Invalid value provided for \${{}}`;
 };
 
 /**
