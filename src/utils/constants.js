@@ -1,3 +1,10 @@
+export const TYPES = {
+    BOOLEAN: "boolean",
+    DATE: "date",
+    NUMBER: 'number',
+    STRING: 'string'
+};
+
 export const BOOLEAN_VALIDATOR_TYPES = {
     EQUAL: "equal",
     REQUIRED: "required"
