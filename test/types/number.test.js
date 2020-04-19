@@ -1,0 +1,101 @@
+import Number from '../../src/types/number';
+import { NUMBER_VALIDATOR_TYPES } from '../../src/utils/constants';
+
+describe("NumberValidator", () => {
+    
+    describe("equals", () => {
+        it("Should add equals validator without message", () => {
+            let validator = Number();
+            validator.equals(10);
+            expect(validator.validators).toContainEqual({message: null, value: 10, type: NUMBER_VALIDATOR_TYPES.EQUAL});
+        });
+
+        it("Should add equals validator with message", () => {
+            let validator = Number();
+            validator.equals(10, "Equal Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Equal Error Message!", value: 10, type: NUMBER_VALIDATOR_TYPES.EQUAL});
+        });
+    });
+
+    describe("in", () => {
+        it("Should add in validator without message", () => {
+            let validator = Number();
+            validator.in([1, 2]);
+
+            expect(validator.validators).toContainEqual({message: null, value: [1, 2], type: NUMBER_VALIDATOR_TYPES.IN});
+        });
+
+        it("Should add in validator with message", () => {
+            let validator = Number();
+            validator.in([1, 2], "Equal Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Equal Error Message!", value: [1, 2], type: NUMBER_VALIDATOR_TYPES.IN});
+        });
+    });
+
+    describe("integer", () => {
+        it("Should add integer validator without message", () => {
+            let validator = Number();
+            validator.integer();
+
+            expect(validator.validators).toContainEqual({message: null, type: NUMBER_VALIDATOR_TYPES.INTEGER});
+        });
+
+        it("Should add integer validator with message", () => {
+            let validator = Number();
+            validator.integer("Integer Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Integer Error Message!", type: NUMBER_VALIDATOR_TYPES.INTEGER});
+        });
+    });
+
+    describe("max", () => {
+        it("Should add max validator without message", () => {
+            let validator = Number();
+            validator.max(10);
+
+            expect(validator.validators).toContainEqual({message: null, value: 10, type: NUMBER_VALIDATOR_TYPES.MAX});
+        });
+
+        it("Should add max validator with message", () => {
+            let validator = Number();
+            validator.max(10, "Max Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Max Error Message!", value: 10, type: NUMBER_VALIDATOR_TYPES.MAX});
+        });
+    });
+
+    describe("min", () => {
+        it("Should add min validator without message", () => {
+            let validator = Number();
+            validator.min(10);
+
+            expect(validator.validators).toContainEqual({message: null, value: 10, type: NUMBER_VALIDATOR_TYPES.MIN});
+        });
+
+        it("Should add min validator with message", () => {
+            let validator = Number();
+            validator.min(10, "Min Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Min Error Message!", value: 10, type: NUMBER_VALIDATOR_TYPES.MIN});
+        });
+    });
+
+    describe("required", () => {
+        it("Should add required validator without message", () => {
+            let validator = Number();
+            validator.required();
+
+            expect(validator.validators).toContainEqual({message: null, type: NUMBER_VALIDATOR_TYPES.REQUIRED});
+        });
+
+        it("Should add required validator with message", () => {
+            let validator = Number();
+            validator.required("Required Error Message!");
+
+            expect(validator.validators).toContainEqual({message: "Required Error Message!", type: NUMBER_VALIDATOR_TYPES.REQUIRED});
+        });
+    });
+
+});
