@@ -2,7 +2,7 @@
  * Equal Error Message
  */
 export const boolean_equal_error_message = () => {
-    return "Incorrect ${{}} value provided";
+    return "Invalid value provided for ${{}}";
 };
 
 /**
