@@ -1,5 +1,5 @@
 import AbstractValidator from "./abstract";
-import { DATE_VALIDATOR_TYPES } from "../utils/constants";
+import { DATE_VALIDATOR_TYPES, TYPES } from "../utils/constants";
 import { date_after_error_message, date_before_error_message, date_equal_error_message, date_required_error_message } from "../messages/date";
 
 /**
@@ -14,7 +14,7 @@ class DateValidator extends AbstractValidator {
      * @param {String} message 
      */
     after(value, message) {
-        this.validators.push({type: DATE_VALIDATOR_TYPES.AFTER, message: message || date_after_error_message(value), value: value});
+        this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.AFTER, message: message || date_after_error_message(value), value: value});
         return this;
     }
 
@@ -25,7 +25,7 @@ class DateValidator extends AbstractValidator {
      * @param {String} message 
      */
     before(value, message) {
-        this.validators.push({type: DATE_VALIDATOR_TYPES.BEFORE, value: value, message: message || date_before_error_message(value)});
+        this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.BEFORE, value: value, message: message || date_before_error_message(value)});
         return this;
     }
 
@@ -36,7 +36,7 @@ class DateValidator extends AbstractValidator {
      * @param {String} message 
      */
     equals(value, message) {
-        this.validators.push({type: DATE_VALIDATOR_TYPES.EQUAL, value: value, message: message || date_equal_error_message(value)});
+        this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.EQUAL, value: value, message: message || date_equal_error_message(value)});
         return this;
     }
 
@@ -46,7 +46,7 @@ class DateValidator extends AbstractValidator {
      * @param {String} message 
      */
     required(message) {
-        this.validators.push({type: DATE_VALIDATOR_TYPES.REQUIRED, message: message || date_required_error_message()});
+        this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.REQUIRED, message: message || date_required_error_message()});
         return this;
     }
 }
