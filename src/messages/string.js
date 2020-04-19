@@ -8,48 +8,41 @@ export const string_email_error_message = () => {
 /**
  * Equal Error Message
  * 
- * @param {String} field 
- * @param {String} value 
  */
-export const string_equal_error_message = (field, value) => {
-    return `Incorrect "${field}" value provided`;
+export const string_equal_error_message = () => {
+    return `Incorrect \${{}} value provided`;
 };
 
 /**
  * In Error Message
- * 
- * @param {String} field 
- * @param {String} value 
+ *  
  */
-export const string_in_error_message = (field, value) => {
-    return `Incorrect "${field}" value provided`;
+export const string_in_error_message = () => {
+    return `Incorrect \${{}} value provided`;
 };
 
 /**
  * Maxlength Error Message
  * 
- * @param {String} field 
  * @param {String} value 
  */
-export const string_maxlength_error_message = (field, value) => {
-    return `"${field}" must have at most ${value} characters`;
+export const string_maxlength_error_message = (value) => {
+    return `\${{}} must have at most ${value} characters`;
 };
 
 /**
  * Minlength Error Message
  * 
- * @param {String} field 
  * @param {String} value 
  */
-export const string_minlength_error_message = (field, value) => {
-    return `"${field}" must have at least ${value} characters`;
+export const string_minlength_error_message = (value) => {
+    return `\${{}} must have at least ${value} characters`;
 };
 
 /**
  * Required Error Message
  * 
- * @param {String} field 
  */
-export const string_required_error_message = (field) => {
-    return `"${field}" is required.`;
+export const string_required_error_message = () => {
+    return `\${{}} is required.`;
 };

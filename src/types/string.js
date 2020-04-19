@@ -1,5 +1,6 @@
 import AbstractValidator from "./abstract";
 import { STRING_VALIDATOR_TYPES } from "../utils/constants";
+import { string_email_error_message, string_in_error_message, string_maxlength_error_message, string_minlength_error_message, string_required_error_message, string_equal_error_message } from "../messages/string";
 
 /**
  * String Validator Class
@@ -19,7 +20,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     email(message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.EMAIL, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.EMAIL, message: message || string_email_error_message()});
         return this;
     }
 
@@ -30,7 +31,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     equals(value, message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.EQUAL, value: value, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.EQUAL, value: value, message: message || string_equal_error_message()});
         return this;
     }
 
@@ -41,7 +42,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     in(value, message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.IN, value: value, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.IN, value: value, message: message || string_in_error_message()});
         return this;
     }
 
@@ -52,7 +53,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     maxlength(value, message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.MAXLENGTH, value: value, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.MAXLENGTH, value: value, message: message || string_maxlength_error_message(value)});
         return this;
     }
 
@@ -63,7 +64,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     minlength(value, message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.MINLENGTH, value: value, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.MINLENGTH, value: value, message: message || string_minlength_error_message(value)});
         return this;
     }
 
@@ -73,7 +74,7 @@ class StringValidator extends AbstractValidator {
      * @param {String} message 
      */
     required(message) {
-        this.validators.push({type: STRING_VALIDATOR_TYPES.REQUIRED, message: message || null});
+        this.validators.push({type: STRING_VALIDATOR_TYPES.REQUIRED, message: message || string_required_error_message()});
         return this;
     }
 }
