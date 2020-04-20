@@ -1,5 +1,8 @@
-import { STRING_VALIDATOR_TYPES } from "../utils/constants";
-import { string_email_error_message, string_maxlength_error_message, string_required_error_message, string_minlength_error_message, string_equal_error_message, string_in_error_message } from "../messages/string";
+import { TYPES } from "../utils/constants";
+import { handleBooleanValidation } from "../validators/boolean";
+import { handleDateValidation } from "../validators/date";
+import { handleNumberValidation } from "../validators/number";
+import { handleStringValidation } from "../validators/string";
 
 /**
  * Schema Wrapper
@@ -10,11 +13,46 @@ export default class Schema {
         this.schema = schema;
     }
 
+    /**
+     * Validate data against schema
+     * 
+     * @param {Object} data 
+     */
+    validate(data) {
+        this.init();
+        return this.process(data);
+    }
+
+    /**
+     * Initialize Schema
+     */
     init() {
         let keys = Object.keys(this.schema);
         for (const key of keys) {
             this.sanitizeMessages(key, this.schema[key].validators);
         }
+    }
+
+    /**
+     * Process data against schema
+     * 
+     * @param {Object} data 
+     */
+    process(data) {
+        let errors = [];
+        let keys = Object.keys(this.schema);
+        for (const field of keys) {
+            for (const validator of this.schema[field].validators) {
+                errors = [
+                    ...errors,
+                    ...this.handleValidation(field, validator, data)
+                ];
+            }
+        }
+        return {
+            isValid: errors.length == 0,
+            errors: errors
+        };
     }
 
     /**
@@ -39,6 +77,31 @@ export default class Schema {
      */
     populatePlaceholders(field, validator) {
         validator.message = validator.message.replace("${{}}", field);
+    }
+
+    /**
+     * Handle Validation
+     * 
+     * @param {String} field 
+     * @param {Object} validator 
+     * @param {Object} data
+     */
+    handleValidation(field, validator, data) {
+        if (validator.validator === TYPES.BOOLEAN) {
+            return handleBooleanValidation(field, validator, data[`${field}`]);
+        }
+        else if (validator.validator === TYPES.DATE) {
+            return handleDateValidation(field, validator, data[`${field}`]);
+        }
+        else if (validator.validator === TYPES.NUMBER) {
+            return handleNumberValidation(field, validator, data[`${field}`]);
+        }
+        else if (validator.validator === TYPES.STRING) {
+            return handleStringValidation(field, validator, data[`${field}`]);
+        }
+        else {
+            return [];
+        }
     }
 
 }

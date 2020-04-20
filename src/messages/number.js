@@ -2,14 +2,14 @@
  * Equal Error Message
  */
 export const number_equal_error_message = () => {
-    return "Invalid value provided for ${{}}.";
+    return "Invalid value provided for ${{}}";
 };
 
 /**
  * In Error Message
  */
 export const number_in_error_message = () => {
-    return "Invalid value provided for ${{}}.";
+    return "Invalid value provided for ${{}}";
 };
 
 /**
