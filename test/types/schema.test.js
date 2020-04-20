@@ -1,11 +1,12 @@
 import moment from 'moment';
 
 import date from '../../src/types/date';
+import array from '../../src/types/array';
 import Schema from '../../src/types/schema';
 import number from '../../src/types/number';
 import string from '../../src/types/string';
 import boolean from '../../src/types/boolean';
-import { STRING_VALIDATOR_TYPES, NUMBER_VALIDATOR_TYPES, DATE_VALIDATOR_TYPES, BOOLEAN_VALIDATOR_TYPES, TYPES } from '../../src/utils/constants';
+import { STRING_VALIDATOR_TYPES, NUMBER_VALIDATOR_TYPES, DATE_VALIDATOR_TYPES, BOOLEAN_VALIDATOR_TYPES, TYPES, ARRAY_VALIDATOR_TYPES } from '../../src/utils/constants';
 import { 
     string_email_error_message, 
     string_maxlength_error_message, 
@@ -32,9 +33,123 @@ import {
     boolean_equal_error_message, 
     boolean_required_error_message 
 } from '../../src/messages/boolean';
+import { array_equal_error_message, array_required_error_message, array_contains_error_message, array_size_error_message } from '../../src/messages/array';
 
 describe("Schema", () => {
     
+    describe("Array Schemas", () => {
+        it("Should create schema for equals", () => {
+            let schema = new Schema({
+                list: array().equals([1,2,3])
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                value: [1,2,3],
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.EQUAL,
+                message: array_equal_error_message()
+            });
+        });
+
+        it("Should create schema for equals with message", () => {
+            let schema = new Schema({
+                list: array().equals([1,2,3], "Array Error Message!")
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                value: [1,2,3],
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.EQUAL,
+                message: "Array Error Message!"
+            });
+        });
+
+        it("Should create schema for contains", () => {
+            let schema = new Schema({
+                list: array().contains(5)
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                validator: TYPES.ARRAY,
+                value: 5,
+                type: ARRAY_VALIDATOR_TYPES.CONTAINS,
+                message: array_contains_error_message(5)
+            });
+        });
+
+        it("Should create schema for contains with message", () => {
+            let schema = new Schema({
+                list: array().contains(5, "Array Error Message!")
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                value: 5,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.CONTAINS,
+                message: "Array Error Message!"
+            });
+        });
+
+        it("Should create schema for required", () => {
+            let schema = new Schema({
+                list: array().required()
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.REQUIRED,
+                message: array_required_error_message()
+            });
+        });
+
+        it("Should create schema for required with message", () => {
+            let schema = new Schema({
+                list: array().required("Array Error Message!")
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.REQUIRED,
+                message: "Array Error Message!"
+            });
+        });
+
+        it("Should create schema for size", () => {
+            let schema = new Schema({
+                list: array().size(5)
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                value: 5,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.SIZE,
+                message: array_size_error_message(5)
+            });
+        });
+
+        it("Should create schema for required with message", () => {
+            let schema = new Schema({
+                list: array().size(5, "Array Error Message!")
+            });
+            
+            expect(schema.schema["list"]).toBeTruthy();
+            expect(schema.schema["list"].validators).toContainEqual({
+                value: 5,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.SIZE,
+                message: "Array Error Message!"
+            });
+        });
+    
+    });
+
     describe("String Schemas", () => {
         it("Should create schema for email", () => {
             let schema = new Schema({
@@ -1247,6 +1362,126 @@ describe("Schema", () => {
         it("process Case #3", () => {
             let result = schema.process({
                 status: false
+            });
+
+            expect(result.isValid).toBeTruthy();
+            expect(result.errors.length).toBe(0);
+        });
+
+    });
+
+    describe("process (Array)", () => {
+        let schema;
+
+        beforeAll(() => {
+            schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+        });
+
+        it("Should Generate Schema", () => {
+            expect(schema.schema["list1"]).toBeTruthy();
+            expect(schema.schema["list1"].validators).toContainEqual({
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.REQUIRED,
+                message: array_required_error_message()
+            });
+            expect(schema.schema["list1"].validators).toContainEqual({
+                value: 1,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.CONTAINS,
+                message: array_contains_error_message(1)
+            });
+            expect(schema.schema["list1"].validators).toContainEqual({
+                value: 5,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.SIZE,
+                message: array_size_error_message(5)
+            });
+
+            expect(schema.schema["list2"]).toBeTruthy();
+            expect(schema.schema["list2"].validators).toContainEqual({
+                value: [1,2,3,4,5],
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.EQUAL,
+                message: array_equal_error_message()
+            });
+        });
+
+        it("Should Replace Fields", () => {
+            schema.init();
+            expect(schema.schema["list1"]).toBeTruthy();
+            expect(schema.schema["list1"].validators).toContainEqual({
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.REQUIRED,
+                message: `list1 is required`
+            });
+            expect(schema.schema["list1"].validators).toContainEqual({
+                value: 1,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.CONTAINS,
+                message: `list1 must contain 1`
+            });
+            expect(schema.schema["list1"].validators).toContainEqual({
+                value: 5,
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.SIZE,
+                message: `list1 must have 5 elements`
+            });
+
+            expect(schema.schema["list2"]).toBeTruthy();
+            expect(schema.schema["list2"].validators).toContainEqual({
+                value: [1,2,3,4,5],
+                validator: TYPES.ARRAY,
+                type: ARRAY_VALIDATOR_TYPES.EQUAL,
+                message: `Invalid value provided for list2`
+            });
+        });
+
+        it("process Case #1", () => {
+            let result = schema.process({});
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'list1', message: "list1 is required"
+            });
+        });
+
+        it("process Case #2", () => {
+            let result = schema.process({
+                list1: [2,3,4,5],
+                list2: [1,2,3,4]
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'list1', message: "list1 must contain 1"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'list1', message: "list1 must have 5 elements"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'list2', message: "Invalid value provided for list2"
+            });
+        });
+
+        it("process Case #3", () => {
+            let result = schema.process({
+                list1: [1,2,3,4],
+                list2: [1,2,3,4,5]
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'list1', message: "list1 must have 5 elements"
+            });
+        });
+
+        it("process Case #4", () => {
+            let result = schema.process({
+                list1: [1,2,3,4,5],
+                list2: [1,2,3,4,5]
             });
 
             expect(result.isValid).toBeTruthy();

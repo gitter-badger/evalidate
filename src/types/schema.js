@@ -1,8 +1,9 @@
 import { TYPES } from "../utils/constants";
-import { handleBooleanValidation } from "../validators/boolean";
 import { handleDateValidation } from "../validators/date";
+import { handleArrayValidation } from "../validators/array";
 import { handleNumberValidation } from "../validators/number";
 import { handleStringValidation } from "../validators/string";
+import { handleBooleanValidation } from "../validators/boolean";
 
 /**
  * Schema Wrapper
@@ -87,6 +88,9 @@ export default class Schema {
      * @param {Object} data
      */
     handleValidation(field, validator, data) {
+        if (validator.validator === TYPES.ARRAY) {
+            return handleArrayValidation(field, validator, data[`${field}`]);
+        }
         if (validator.validator === TYPES.BOOLEAN) {
             return handleBooleanValidation(field, validator, data[`${field}`]);
         }
