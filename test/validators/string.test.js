@@ -104,6 +104,148 @@ describe("String Validator", () => {
 
     });
 
+    describe("Input Validation", () => {
+        it("Should return error if equals value is not a string", () => {
+            try {
+                string().equals();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not a string", () => {
+            try {
+                string().equals([]);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not a string", () => {
+            try {
+                string().equals("value", 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if in value is not a string", () => {
+            try {
+                string().in();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if in value is not a string", () => {
+            try {
+                string().in(10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if in value is not a string", () => {
+            try {
+                string().in([], 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if maxlength value is not a string", () => {
+            try {
+                string().maxlength();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if maxlength value is not a string", () => {
+            try {
+                string().maxlength("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if maxlength value is not a string", () => {
+            try {
+                string().maxlength(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if minlength value is not a string", () => {
+            try {
+                string().minlength();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if minlength value is not a string", () => {
+            try {
+                string().minlength("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if minlength value is not a string", () => {
+            try {
+                string().minlength(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if required value is not a string", () => {
+            try {
+                string().required([]);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if email value is not a string", () => {
+            try {
+                string().email([]);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+    });
+
     describe("isString", () => {
         it("Should return true if input is string", () => {
             expect(isString("String")).toBeTruthy();
