@@ -24,3 +24,12 @@ export const isArray = (value) => {
 export const isInteger = (value) => {
     return Number.isInteger(value);
 };
+
+/**
+ * Check if object is boolean
+ * 
+ * @param {Object} value 
+ */
+export const isBoolean = (value) => {
+    return typeof value === 'boolean';
+};

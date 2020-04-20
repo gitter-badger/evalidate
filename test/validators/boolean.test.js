@@ -36,6 +36,29 @@ describe("Date Validator", () => {
 
     });
 
+    describe("Input Validation", () => {
+        it("Should return error if equals message is not a string", () => {
+            try {
+                boolean().equals(true, true);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if required message is not a string", () => {
+            try {
+                boolean().required(true);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+    });
+
+
     describe("isBoolean", () => {
         it("Should return true if input is boolean", () => {
             expect(isBoolean(true)).toBeTruthy();

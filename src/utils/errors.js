@@ -24,3 +24,12 @@ export const array_type_error_message = (field) => {
 export const integer_type_error_message = (field) => {
     return `${field} must be an integer`;
 };
+
+/**
+ * Boolean Type Error Message
+ * 
+ * @param {String} field 
+ */
+export const boolean_type_error_message = (field) => {
+    return `${field} must be a boolean`;
+};
