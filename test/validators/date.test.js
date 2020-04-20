@@ -39,21 +39,21 @@ describe("Date Validator", () => {
         });
 
         it("Should return error if input isn't after value", () => {
-            let input = moment();
+            let input = moment().toDate();
             let validator = date().after(input);
-            expect(handleDateValidation("field", validator.validators[0], moment().subtract(1, 'minute'))).toContainEqual({
+            expect(handleDateValidation("field", validator.validators[0], moment().subtract(1, 'minute').toDate())).toContainEqual({
                 field: "field", message: date_after_error_message(input)
             });
         });
 
         it("Shouldn't return error if input is after value", () => {
-            let input = moment();
+            let input = moment().toDate();
             let validator = date().after(input);
-            expect(handleDateValidation("field", validator.validators[0], moment()).length).toBe(0);
+            expect(handleDateValidation("field", validator.validators[0], moment().toDate()).length).toBe(0);
         });
 
         it("Shouldn't return error if input is not required and vallue is not passed", () => {
-            let input = moment();
+            let input = moment().toDate();
             let validator = date().after(input);
             expect(handleDateValidation("field", validator.validators[0], null).length).toBe(0);
         });
@@ -67,13 +67,13 @@ describe("Date Validator", () => {
         });
 
         it("Shouldn't return error if input is before value", () => {
-            let input = moment();
+            let input = moment().toDate();
             let validator = date().before(input);
-            expect(handleDateValidation("field", validator.validators[0], moment().subtract(1, 'hours')).length).toBe(0);
+            expect(handleDateValidation("field", validator.validators[0], moment().subtract(1, 'hours').toDate()).length).toBe(0);
         });
 
         it("Shouldn't return error if input is not required and value is not passed", () => {
-            let input = moment();
+            let input = moment().toDate();
             let validator = date().before(input);
             expect(handleDateValidation("field", validator.validators[0], null).length).toBe(0);
         });
