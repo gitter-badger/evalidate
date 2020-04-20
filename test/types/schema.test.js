@@ -1264,7 +1264,8 @@ describe("Schema", () => {
                 email: string().required().email(),
                 phone_number: string().minlength(10),
                 age: number().min(18),
-                birthday: date().required()
+                birthday: date().required(),
+                status: boolean().equals(true)
             });
         });
 
@@ -1313,11 +1314,15 @@ describe("Schema", () => {
                 email: "aderabiruk@gmail.com",
                 phone_number: "0912365120",
                 age: 17,
-                birthday: new Date()
+                birthday: new Date(),
+                status: false
             });
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
                 field: "age", message: `age must be greater than 18`
+            });
+            expect(result.errors).toContainEqual({
+                field: "status", message: `Invalid value provided for status`
             });
         });
 
