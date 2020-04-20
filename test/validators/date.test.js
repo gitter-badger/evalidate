@@ -80,6 +80,108 @@ describe("Date Validator", () => {
 
     });
 
+    describe("Input Validation", () => {
+        it("Should return error if after value is not a date", () => {
+            try {
+                date().after();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if after value is not a date", () => {
+            try {
+                date().after("");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if after message is not a string", () => {
+            try {
+                date().after(new Date(), 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if before value is not a date", () => {
+            try {
+                date().before();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if before value is not a date", () => {
+            try {
+                date().before("");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if before message is not a string", () => {
+            try {
+                date().before(new Date(), 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not a date", () => {
+            try {
+                date().equals();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not a date", () => {
+            try {
+                date().equals("");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals message is not a string", () => {
+            try {
+                date().equals(new Date(), 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if required message is not a string", () => {
+            try {
+                date().required(10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+    });
+
     describe("isDate", () => {
         it("Should return true if input is date", () => {
             expect(isDate(new Date())).toBeTruthy();

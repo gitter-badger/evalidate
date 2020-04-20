@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * Check if object is string
  * 
@@ -32,4 +34,13 @@ export const isInteger = (value) => {
  */
 export const isBoolean = (value) => {
     return typeof value === 'boolean';
+};
+
+/**
+ * Check if object is date
+ * 
+ * @param {Object} value 
+ */
+export const isDate = (value) => {
+    return moment(value).isValid();
 };
