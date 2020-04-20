@@ -70,6 +70,68 @@ describe("Date Validator", () => {
 
     });
 
+    describe("Input Validation", () => {
+        it("Should return error if contain message is not a string", () => {
+            try {
+                array().contains(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals message is not a string", () => {
+            try {
+                array().equals([], 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not an array", () => {
+            try {
+                array().equals("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if size message is not a string", () => {
+            try {
+                array().size(5, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if size value is not an integer", () => {
+            try {
+                array().size(1.5);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if required message is not a string", () => {
+            try {
+                array().required(10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+    });
+
     describe("isArray", () => {
         it("Should return true if input is array", () => {
             expect(isArray([])).toBeTruthy();
