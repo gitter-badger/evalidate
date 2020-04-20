@@ -1686,122 +1686,6 @@ describe("Schema", () => {
 
     });
 
-    describe("validate", () => {
-        it("validate Case #1", () => {
-            let schema = new Schema({
-                name: string().required(),
-                email: string().required().email(),
-                phone_number: string().minlength(10),
-                age: number().min(18),
-                birthday: date().required(),
-                status: boolean().equals(true)
-            });
-            let result = schema.validate({});
-            
-            expect(result.isValid).toBeFalsy();
-            expect(result.errors).toContainEqual({
-                field: "name", message: `name is required`
-            });
-            expect(result.errors).toContainEqual({
-                field: "email", message: `email is required`
-            });
-            expect(result.errors).toContainEqual({
-                field: "birthday", message: `birthday is required`
-            });
-        });
-
-        it("validate Case #2", () => {
-            let schema = new Schema({
-                name: string().required(),
-                email: string().required().email(),
-                phone_number: string().minlength(10),
-                age: number().min(18),
-                birthday: date().required(),
-                status: boolean().equals(true)
-            });
-            let result = schema.validate({
-                name: "Biruk",
-                email: "invalid",
-                birthday: new Date()
-            });
-
-            expect(result.isValid).toBeFalsy();
-            expect(result.errors).toContainEqual({
-                field: "email", message: `Email address is invalid`
-            });
-        });
-
-        it("validate Case #3", () => {
-            let schema = new Schema({
-                name: string().required(),
-                email: string().required().email(),
-                phone_number: string().minlength(10),
-                age: number().min(18),
-                birthday: date().required(),
-                status: boolean().equals(true)
-            });
-            let result = schema.validate({
-                name: "Biruk",
-                email: "aderabiruk@gmail.com",
-                phone_number: "123456789",
-                birthday: new Date()
-            });
-
-            expect(result.isValid).toBeFalsy();
-            expect(result.errors).toContainEqual({
-                field: "phone_number", message: `phone_number must have at least 10 characters`
-            });
-        });
-
-        it("validate Case #4", () => {
-            let schema = new Schema({
-                name: string().required(),
-                email: string().required().email(),
-                phone_number: string().minlength(10),
-                age: number().min(18),
-                birthday: date().required(),
-                status: boolean().equals(true)
-            });
-            let result = schema.validate({
-                name: "Biruk",
-                email: "aderabiruk@gmail.com",
-                phone_number: "0912365120",
-                age: 17,
-                birthday: new Date(),
-                status: false
-            });
-
-            expect(result.isValid).toBeFalsy();
-            expect(result.errors).toContainEqual({
-                field: "age", message: `age must be greater than 18`
-            });
-            expect(result.errors).toContainEqual({
-                field: "status", message: `Invalid value provided for status`
-            });
-        });
-
-        it("validate Case #5", () => {
-            let schema = new Schema({
-                name: string().required(),
-                email: string().required().email(),
-                phone_number: string().minlength(10),
-                age: number().min(18),
-                birthday: date().required(),
-                status: boolean().equals(true)
-            });
-            let result = schema.validate({
-                name: "Biruk",
-                email: "aderabiruk@gmail.com",
-                phone_number: "0912365120",
-                age: 18,
-                birthday: new Date()
-            });
-
-            expect(result.isValid).toBeTruthy();
-            expect(result.errors.length).toBe(0);
-        });
-    });
-
     describe('validate (Object)', () => {
         it("Case #1", () => {
             let schema = new Schema({
@@ -2002,5 +1886,122 @@ describe("Schema", () => {
             expect(result.errors.length).toBe(0);
         });
     });
+
+    describe("validate", () => {
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
+            let result = schema.validate({});
+            
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "name", message: `name is required`
+            });
+            expect(result.errors).toContainEqual({
+                field: "email", message: `email is required`
+            });
+            expect(result.errors).toContainEqual({
+                field: "birthday", message: `birthday is required`
+            });
+        });
+
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                email: "invalid",
+                birthday: new Date()
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "email", message: `Email address is invalid`
+            });
+        });
+
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "123456789",
+                birthday: new Date()
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "phone_number", message: `phone_number must have at least 10 characters`
+            });
+        });
+
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "0912365120",
+                age: 17,
+                birthday: new Date(),
+                status: false
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "age", message: `age must be greater than 18`
+            });
+            expect(result.errors).toContainEqual({
+                field: "status", message: `Invalid value provided for status`
+            });
+        });
+
+        it("validate Case #5", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "0912365120",
+                age: 18,
+                birthday: new Date()
+            });
+
+            expect(result.isValid).toBeTruthy();
+            expect(result.errors.length).toBe(0);
+        });
+    });
+
     
 });
