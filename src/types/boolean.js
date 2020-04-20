@@ -9,6 +9,12 @@ import { string_type_error_message } from "../utils/errors";
  */
 class BooleanValidator extends AbstractValidator {
 
+    /**
+     * Equals Validator
+     * 
+     * @param {Boolean} value 
+     * @param {String} message 
+     */
     equals(value, message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
@@ -17,6 +23,11 @@ class BooleanValidator extends AbstractValidator {
         return this;
     }
 
+    /**
+     * Reuired Validator
+     * 
+     * @param {String} message 
+     */
     required(message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
