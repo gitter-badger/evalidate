@@ -1,6 +1,7 @@
 import boolean from '../../src/types/boolean';
 import { BOOLEAN_VALIDATOR_TYPES, TYPES } from '../../src/utils/constants';
 import { boolean_equal_error_message, boolean_required_error_message } from '../../src/messages/boolean';
+import { boolean_type_error_message } from '../../src/utils/errors';
 
 
 describe("BooleanValidator", () => {
@@ -10,6 +11,7 @@ describe("BooleanValidator", () => {
             let validator = boolean();
             validator.equals(true);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_type_error_message("${{}}"), type: BOOLEAN_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_equal_error_message(), value: true, type: BOOLEAN_VALIDATOR_TYPES.EQUAL});
         });
 
@@ -17,6 +19,7 @@ describe("BooleanValidator", () => {
             let validator = boolean();
             validator.equals(true, "Date Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_type_error_message("${{}}"), type: BOOLEAN_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: "Date Error Message!", value: true, type: BOOLEAN_VALIDATOR_TYPES.EQUAL});
         });
     });
@@ -26,6 +29,7 @@ describe("BooleanValidator", () => {
             let validator = boolean();
             validator.required();
 
+            expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_type_error_message("${{}}"), type: BOOLEAN_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_required_error_message(), type: BOOLEAN_VALIDATOR_TYPES.REQUIRED});
         });
 
@@ -33,6 +37,7 @@ describe("BooleanValidator", () => {
             let validator = boolean();
             validator.required("Required Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: boolean_type_error_message("${{}}"), type: BOOLEAN_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.BOOLEAN, message: "Required Error Message!", type: BOOLEAN_VALIDATOR_TYPES.REQUIRED});
         });
     });

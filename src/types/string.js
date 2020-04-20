@@ -16,6 +16,11 @@ import { string_type_error_message, number_type_error_message, array_type_error_
  */
 class StringValidator extends AbstractValidator {
 
+    constructor() {
+        super();
+        this.validators.push({validator: TYPES.STRING, type: STRING_VALIDATOR_TYPES.TYPE, message: string_type_error_message("${{}}")});
+    }
+
     /**
      * Email Validator
      * 

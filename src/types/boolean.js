@@ -2,7 +2,7 @@ import AbstractValidator from "./abstract";
 import { BOOLEAN_VALIDATOR_TYPES, TYPES } from "../utils/constants";
 import { boolean_equal_error_message, boolean_required_error_message } from "../messages/boolean";
 import { isString } from "../utils/validator";
-import { string_type_error_message } from "../utils/errors";
+import { string_type_error_message, boolean_type_error_message } from "../utils/errors";
 
 /**
  * Boolean Validator Class
@@ -11,6 +11,11 @@ import { string_type_error_message } from "../utils/errors";
  * @method required
  */
 class BooleanValidator extends AbstractValidator {
+
+    constructor() {
+        super();
+        this.validators.push({validator: TYPES.BOOLEAN, type: BOOLEAN_VALIDATOR_TYPES.TYPE, message: boolean_type_error_message("${{}}")});
+    }
 
     /**
      * Equals Validator

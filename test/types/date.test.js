@@ -1,6 +1,7 @@
 import date from '../../src/types/date';
 import { DATE_VALIDATOR_TYPES, TYPES } from '../../src/utils/constants';
 import { date_equal_error_message, date_after_error_message, date_before_error_message, date_required_error_message } from '../../src/messages/date';
+import { date_type_error_message } from '../../src/utils/errors';
 
 describe("DateValidator", () => {
     
@@ -10,6 +11,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.after(d);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_after_error_message(d), value: d, type: DATE_VALIDATOR_TYPES.AFTER});
         });
 
@@ -18,6 +20,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.after(d, "After Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: "After Error Message!", value: d, type: DATE_VALIDATOR_TYPES.AFTER});
         });
     });
@@ -28,6 +31,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.before(d);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_before_error_message(d), value: d, type: DATE_VALIDATOR_TYPES.BEFORE});
         });
 
@@ -36,6 +40,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.before(d, "Before Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: "Before Error Message!", value: d, type: DATE_VALIDATOR_TYPES.BEFORE});
         });
     });
@@ -46,6 +51,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.equals(d);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_equal_error_message(), value: d, type: DATE_VALIDATOR_TYPES.EQUAL});
         });
 
@@ -54,6 +60,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.equals(d, "Date Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: "Date Error Message!", value: d, type: DATE_VALIDATOR_TYPES.EQUAL});
         });
     });
@@ -63,6 +70,7 @@ describe("DateValidator", () => {
             let validator = date();
             validator.required();
 
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_required_error_message(), type: DATE_VALIDATOR_TYPES.REQUIRED});
         });
 
@@ -70,6 +78,7 @@ describe("DateValidator", () => {
             let validator = date  ();
             validator.required("Required Error Message!");
 
+            expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: date_type_error_message("${{}}"), type: DATE_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.DATE, message: "Required Error Message!", type: DATE_VALIDATOR_TYPES.REQUIRED});
         });
     });

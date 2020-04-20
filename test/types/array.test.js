@@ -1,6 +1,8 @@
 import array from '../../src/types/array';
+import { array_type_error_message } from '../../src/utils/errors';
 import { ARRAY_VALIDATOR_TYPES, TYPES } from '../../src/utils/constants';
 import { array_equal_error_message, array_size_error_message, array_contains_error_message, array_required_error_message } from '../../src/messages/array';
+
 
 
 describe("ArrayValidator", () => {
@@ -10,6 +12,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.contains(5);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_contains_error_message(5), value: 5, type: ARRAY_VALIDATOR_TYPES.CONTAINS});
         });
 
@@ -26,6 +29,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.equals([1,2,3,4,5]);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_equal_error_message(), value: [1,2,3,4,5], type: ARRAY_VALIDATOR_TYPES.EQUAL});
         });
 
@@ -33,6 +37,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.equals([1,2,3,4,5], "Array Error Message!");
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: "Array Error Message!", value: [1,2,3,4,5], type: ARRAY_VALIDATOR_TYPES.EQUAL});
         });
     });
@@ -49,6 +54,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.required("Array Error Message!");
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: "Array Error Message!", type: ARRAY_VALIDATOR_TYPES.REQUIRED});
         });
     });
@@ -58,6 +64,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.size(5);
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_size_error_message(5), value: 5, type: ARRAY_VALIDATOR_TYPES.SIZE});
         });
 
@@ -65,6 +72,7 @@ describe("ArrayValidator", () => {
             let validator = array();
             validator.size(5, "Array Error Message!");
             
+            expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: array_type_error_message("${{}}"), type: ARRAY_VALIDATOR_TYPES.TYPE});
             expect(validator.validators).toContainEqual({validator: TYPES.ARRAY, message: "Array Error Message!", value: 5, type: ARRAY_VALIDATOR_TYPES.SIZE});
         });
     });

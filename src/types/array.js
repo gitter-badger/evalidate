@@ -14,6 +14,11 @@ import { string_type_error_message, array_type_error_message, integer_type_error
  */
 class ArrayValidator extends AbstractValidator {
 
+    constructor() {
+        super();
+        this.validators.push({validator: TYPES.ARRAY, type: ARRAY_VALIDATOR_TYPES.TYPE, message: array_type_error_message("${{}}")});
+    }
+
     /**
      * Contains Validator
      * 

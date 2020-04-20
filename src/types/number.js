@@ -15,6 +15,11 @@ import { string_type_error_message, number_type_error_message, array_type_error_
  */
 class NumberValidator extends AbstractValidator {
 
+    constructor() {
+        super();
+        this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.TYPE, message: number_type_error_message("${{}}")});
+    }
+
     /**
      * Equals Validator
      * 

@@ -14,6 +14,11 @@ import { string_type_error_message, date_type_error_message } from "../utils/err
  */
 class DateValidator extends AbstractValidator {
 
+    constructor() {
+        super();
+        this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.TYPE, message: date_type_error_message("${{}}")});
+    }
+
     /**
      * After Validator
      * 
