@@ -672,7 +672,7 @@ describe("Schema", () => {
 
     });
 
-    describe("validate (String)", () => {
+    describe("process (String)", () => {
         let schema;
 
         beforeAll(() => {
@@ -863,7 +863,7 @@ describe("Schema", () => {
 
     });
 
-    describe("validate (Number)", () => {
+    describe("process (Number)", () => {
         let schema;
 
         beforeAll(() => {
@@ -1051,7 +1051,7 @@ describe("Schema", () => {
         });
     });
 
-    describe("validate (Date)", () => {
+    describe("process (Date)", () => {
         let schema;
         let today = moment(), 
             yesterday = moment().subtract(1, 'days'), 
@@ -1184,7 +1184,7 @@ describe("Schema", () => {
 
     });
 
-    describe("validate (Boolean)", () => {
+    describe("process (Boolean)", () => {
         let schema;
 
         beforeAll(() => {
@@ -1249,6 +1249,86 @@ describe("Schema", () => {
                 status: false
             });
 
+            expect(result.isValid).toBeTruthy();
+            expect(result.errors.length).toBe(0);
+        });
+
+    });
+
+    describe("validate", () => {
+        let schema;
+
+        beforeAll(() => {
+            schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required()
+            });
+        });
+
+        it("validate Case #1", () => {
+            let result = schema.validate({});
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "name", message: `name is required`
+            });
+            expect(result.errors).toContainEqual({
+                field: "email", message: `email is required`
+            });
+            expect(result.errors).toContainEqual({
+                field: "birthday", message: `birthday is required`
+            });
+        });
+
+        it("validate Case #2", () => {
+            let result = schema.validate({
+                name: "Biruk",
+                email: "invalid",
+                birthday: new Date()
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "email", message: `Email address is invalid`
+            });
+        });
+
+        it("validate Case #3", () => {
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "123456789",
+                birthday: new Date()
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "phone_number", message: `phone_number must have at least 10 characters`
+            });
+        });
+
+        it("validate Case #4", () => {
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "0912365120",
+                age: 17,
+                birthday: new Date()
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "age", message: `age must be greater than 18`
+            });
+        });
+
+        it("validate Case #5", () => {
+            let result = schema.validate({
+                name: "Biruk",
+                email: "aderabiruk@gmail.com",
+                phone_number: "0912365120",
+                age: 18,
+                birthday: new Date()
+            });
             expect(result.isValid).toBeTruthy();
             expect(result.errors.length).toBe(0);
         });

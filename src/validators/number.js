@@ -9,7 +9,7 @@ import { NUMBER_VALIDATOR_TYPES } from "../utils/constants";
  */
 export const handleNumberValidation = (field, validator, value) => {
     let errors = [];
-    if (value && isNumber(value)) {
+    if (value !== null && value !== undefined && isNumber(value)) {
         switch (validator.type) {
             case NUMBER_VALIDATOR_TYPES.EQUAL:
                 if (value !== validator.value) {
