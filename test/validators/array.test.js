@@ -101,6 +101,16 @@ describe("Date Validator", () => {
             }
         });
 
+        it("Should return error if equals value is not an array", () => {
+            try {
+                array().equals();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
         it("Should return error if size message is not a string", () => {
             try {
                 array().size(5, 10);
@@ -114,6 +124,16 @@ describe("Date Validator", () => {
         it("Should return error if size value is not an integer", () => {
             try {
                 array().size(1.5);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if size value is not an integer", () => {
+            try {
+                array().size();
                 fail();
             }
             catch (error) {
