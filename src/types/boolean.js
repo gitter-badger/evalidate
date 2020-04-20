@@ -6,6 +6,9 @@ import { string_type_error_message } from "../utils/errors";
 
 /**
  * Boolean Validator Class
+ * 
+ * @method equals
+ * @method required
  */
 class BooleanValidator extends AbstractValidator {
 

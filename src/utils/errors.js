@@ -42,3 +42,12 @@ export const boolean_type_error_message = (field) => {
 export const date_type_error_message = (field) => {
     return `${field} must be a date`;
 };
+
+/**
+ * Number Type Error Message
+ * 
+ * @param {String} field 
+ */
+export const number_type_error_message = (field) => {
+    return `${field} must be a number`;
+};

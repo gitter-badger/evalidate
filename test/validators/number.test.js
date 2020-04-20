@@ -102,6 +102,148 @@ describe("Number Validator", () => {
             expect(handleNumberValidation("field", validator.validators[0], null).length).toBe(0);
         });
     });
+
+    describe("Input Validation", () => {
+        it("Should return error if equals value is not a number", () => {
+            try {
+                number().equals();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if equals value is not a number", () => {
+            try {
+                number().equals("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+        
+        it("Should return error if equals message is not a string", () => {
+            try {
+                number().equals(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if min value is not a number", () => {
+            try {
+                number().min();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if min value is not a number", () => {
+            try {
+                number().min("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+        
+        it("Should return error if min message is not a string", () => {
+            try {
+                number().min(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if max value is not a number", () => {
+            try {
+                number().max();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if max value is not a number", () => {
+            try {
+                number().max("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+        
+        it("Should return error if max message is not a string", () => {
+            try {
+                number().max(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if in value is not an array", () => {
+            try {
+                number().in();
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if in value is not an array", () => {
+            try {
+                number().in("invalid");
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+        
+        it("Should return error if in message is not a string", () => {
+            try {
+                number().in(10, 10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if integer message is not a string", () => {
+            try {
+                number().integer(10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+
+        it("Should return error if required message is not a string", () => {
+            try {
+                number().required(10);
+                fail();
+            }
+            catch (error) {
+                expect(error).toBeTruthy();
+            }
+        });
+    });
     
     describe("isNumber", () => {
         it("Should return true if input is number", () => {

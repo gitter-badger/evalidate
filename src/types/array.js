@@ -6,6 +6,11 @@ import { string_type_error_message, array_type_error_message, integer_type_error
 
 /**
  * Array Validator Class
+ * 
+ * @method contains
+ * @method equals
+ * @method required
+ * @method size
  */
 class ArrayValidator extends AbstractValidator {
 

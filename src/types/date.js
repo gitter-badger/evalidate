@@ -6,6 +6,11 @@ import { string_type_error_message, date_type_error_message } from "../utils/err
 
 /**
  * Date Validator Class
+ * 
+ * @method after
+ * @method before
+ * @method equals
+ * @method required
  */
 class DateValidator extends AbstractValidator {
 
@@ -20,7 +25,7 @@ class DateValidator extends AbstractValidator {
             throw new Error(string_type_error_message("message"));
         }
         if (!value || !isDate(value)) {
-            throw new Error(date_type_error_message("date"));
+            throw new Error(date_type_error_message("value"));
         }
         this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.AFTER, message: message || date_after_error_message(value), value: value});
         return this;
@@ -37,7 +42,7 @@ class DateValidator extends AbstractValidator {
             throw new Error(string_type_error_message("message"));
         }
         if (!value || !isDate(value)) {
-            throw new Error(date_type_error_message("date"));
+            throw new Error(date_type_error_message("value"));
         }
         this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.BEFORE, value: value, message: message || date_before_error_message(value)});
         return this;
@@ -54,7 +59,7 @@ class DateValidator extends AbstractValidator {
             throw new Error(string_type_error_message("message"));
         }
         if (!value || !isDate(value)) {
-            throw new Error(date_type_error_message("date"));
+            throw new Error(date_type_error_message("value"));
         }
         this.validators.push({validator: TYPES.DATE, type: DATE_VALIDATOR_TYPES.EQUAL, value: value, message: message || date_equal_error_message(value)});
         return this;

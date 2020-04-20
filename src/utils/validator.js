@@ -44,3 +44,12 @@ export const isBoolean = (value) => {
 export const isDate = (value) => {
     return moment(value).isValid();
 };
+
+/**
+ * Check if object is number
+ * 
+ * @param {Object} value 
+ */
+export const isNumber = (value) => {
+    return typeof value === 'number' && isFinite(value);
+};

@@ -1,6 +1,8 @@
 import AbstractValidator from "./abstract";
 import { NUMBER_VALIDATOR_TYPES, TYPES } from "../utils/constants";
 import { number_equal_error_message, number_in_error_message, number_integer_error_message, number_max_error_message, number_min_error_message, number_required_error_message } from "../messages/number";
+import { isString, isNumber, isArray } from "../utils/validator";
+import { string_type_error_message, number_type_error_message, array_type_error_message } from "../utils/errors";
 
 /**
  * Number Validator Class
@@ -20,6 +22,12 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     equals(value, message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
+        if (!isNumber(value)) {
+            throw new Error(number_type_error_message("value"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.EQUAL, value: value, message: message || number_equal_error_message()});
         return this;
     }
@@ -31,6 +39,12 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     in(value, message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
+        if (!isArray(value)) {
+            throw new Error(array_type_error_message("value"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.IN, value: value, message: message || number_in_error_message()});
         return this;
     }
@@ -41,6 +55,9 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     integer(message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.INTEGER, message: message || number_integer_error_message()});
         return this;
     }
@@ -52,6 +69,12 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     max(value, message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
+        if (!isNumber(value)) {
+            throw new Error(number_type_error_message("value"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.MAX, value: value, message: message || number_max_error_message(value)});
         return this;
     }
@@ -63,6 +86,12 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     min(value, message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
+        if (!isNumber(value)) {
+            throw new Error(number_type_error_message("value"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.MIN, value: value, message: message || number_min_error_message(value)});
         return this;
     }
@@ -73,6 +102,9 @@ class NumberValidator extends AbstractValidator {
      * @param {String} message 
      */
     required(message) {
+        if (message && !isString(message)) {
+            throw new Error(string_type_error_message("message"));
+        }
         this.validators.push({validator: TYPES.NUMBER, type: NUMBER_VALIDATOR_TYPES.REQUIRED, message: message || number_required_error_message()});
         return this;
     }
