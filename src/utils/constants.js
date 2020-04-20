@@ -1,8 +1,16 @@
 export const TYPES = {
+    ARRAY: "array",
     BOOLEAN: "boolean",
     DATE: "date",
     NUMBER: 'number',
     STRING: 'string'
+};
+
+export const ARRAY_VALIDATOR_TYPES = {
+    CONTAINS: "contains",
+    EQUAL: "equal",
+    REQUIRED: "required",
+    SIZE: "size"
 };
 
 export const BOOLEAN_VALIDATOR_TYPES = {
