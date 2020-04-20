@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/aderabiruk/evalidate#readme",
   "dependencies": {
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "validator": "^13.0.0"
   },
