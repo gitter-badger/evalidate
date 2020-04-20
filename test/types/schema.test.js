@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import date from '../../src/types/date';
 import array from '../../src/types/array';
+import object from '../../src/types/object';
 import Schema from '../../src/types/schema';
 import number from '../../src/types/number';
 import string from '../../src/types/string';
@@ -787,19 +788,15 @@ describe("Schema", () => {
 
     });
 
-    describe("process (String)", () => {
-        let schema;
-
-        beforeAll(() => {
-            schema = new Schema({
+    describe("validate (String)", () => {
+        it("Should Generate Schema", () => {
+            let schema = new Schema({
                 name: string().required('Name is required!').minlength(3).maxlength(10),
                 email: string().required("Email is required!").email(),
                 status: string().required("Status is required!").in(["Active", "Deactive"]),
                 type: string().required().equals("Admin")
             });
-        });
 
-        it("Should Generate Schema", () => {
             expect(schema.schema["name"]).toBeTruthy();
             expect(schema.schema["name"].validators).toContainEqual({
                 validator: TYPES.STRING,
@@ -859,6 +856,12 @@ describe("Schema", () => {
         });
 
         it("Should Replace Fields", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
             schema.init();
             expect(schema.schema["name"].validators).toContainEqual({
                 validator: TYPES.STRING,
@@ -900,8 +903,14 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #1", () => {
-            let result = schema.process({});
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
+            let result = schema.validate({});
 
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
@@ -918,8 +927,14 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #2", () => {
-            let result = schema.process({
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
+            let result = schema.validate({
                 name: "A",
                 email: "invalid",
                 status: "invalid",
@@ -941,8 +956,14 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #3", () => {
-            let result = schema.process({
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
+            let result = schema.validate({
                 name: "12345678901234567890",
                 email: "invalid",
                 status: "invalid",
@@ -964,32 +985,62 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #4", () => {
-            let result = schema.process({
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
+            let result = schema.validate({
+                name: [],
+                email: "invalid",
+                status: "invalid",
+                type: "invalid"
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'name', message: "name must be a string"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'email', message: "Email address is invalid"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'status', message: "Invalid value provided for status"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'type', message: "Invalid value provided for type"
+            });
+        });
+
+        it("validate Case #5", () => {
+            let schema = new Schema({
+                name: string().required('Name is required!').minlength(3).maxlength(10),
+                email: string().required("Email is required!").email(),
+                status: string().required("Status is required!").in(["Active", "Deactive"]),
+                type: string().required().equals("Admin")
+            });
+            let result = schema.validate({
                 name: "Biruk",
                 email: "aderabiruk@gmail.com",
                 status: "Active",
                 type: "Admin"
             });
-
             expect(result.isValid).toBeTruthy();
             expect(result.errors.length).toBe(0);
         });
 
     });
 
-    describe("process (Number)", () => {
-        let schema;
-
-        beforeAll(() => {
-            schema = new Schema({
+    describe("validate (Number)", () => {
+        it("Should Generate Schema", () => {
+            let schema = new Schema({
                 code: number().required().equals(10),
                 age: number().required().integer().min(0).max(100),
                 status: number().required().in([1, 2, 3, 4, 5])
             });
-        });
 
-        it("Should Generate Schema", () => {
             expect(schema.schema["code"]).toBeTruthy();
             expect(schema.schema["code"].validators).toContainEqual({
                 validator: TYPES.NUMBER,
@@ -1042,7 +1093,13 @@ describe("Schema", () => {
         });
 
         it("Should Replace Fields", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
             schema.init();
+            
             expect(schema.schema["code"]).toBeTruthy();
             expect(schema.schema["code"].validators).toContainEqual({
                 validator: TYPES.NUMBER,
@@ -1094,8 +1151,13 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #1", () => {
-            let result = schema.process({});
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({});
 
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
@@ -1109,8 +1171,13 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #2", () => {
-            let result = schema.process({
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({
                 code: 5,
                 age: 1.5,
                 status: 0
@@ -1128,8 +1195,13 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #3", () => {
-            let result = schema.process({
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({
                 code: 10,
                 age: -5,
                 status: 1
@@ -1141,8 +1213,13 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #4", () => {
-            let result = schema.process({
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({
                 code: 10,
                 age: 101,
                 status: 1
@@ -1154,8 +1231,34 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #5", () => {
-            let result = schema.process({
+        it("validate Case #5", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({
+                code: "invalid",
+                age: 101,
+                status: 1
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'code', message: "code must be a number"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'age', message: "age must be less than 100"
+            });
+        });
+
+        it("validate Case #6", () => {
+            let schema = new Schema({
+                code: number().required().equals(10),
+                age: number().required().integer().min(0).max(100),
+                status: number().required().in([1, 2, 3, 4, 5])
+            });
+            let result = schema.validate({
                 code: 10,
                 age: 100,
                 status: 1
@@ -1166,20 +1269,17 @@ describe("Schema", () => {
         });
     });
 
-    describe("process (Date)", () => {
-        let schema;
+    describe("validate (Date)", () => {
         let today = moment(), 
             yesterday = moment().subtract(1, 'days'), 
             tomorrow = moment().add(1, 'days');
 
-        beforeAll(() => {
-            schema = new Schema({
+        it("Should Generate Schema", () => {
+            let schema = new Schema({
                 date: date().required().equals(today),
                 birthday: date().required().after(yesterday).before(tomorrow)
             });
-        });
 
-        it("Should Generate Schema", () => {
             expect(schema.schema["date"]).toBeTruthy();
             expect(schema.schema["date"].validators).toContainEqual({
                 validator: TYPES.DATE,
@@ -1214,7 +1314,12 @@ describe("Schema", () => {
         });
 
         it("Should Replace Fields", () => {
-            schema.init();
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            schema.init({});
+            
             expect(schema.schema["date"]).toBeTruthy();
             expect(schema.schema["date"].validators).toContainEqual({
                 validator: TYPES.DATE,
@@ -1248,8 +1353,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #1", () => {
-            let result = schema.process({});
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            let result = schema.validate({});
 
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
@@ -1260,8 +1369,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #2", () => {
-            let result = schema.process({
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            let result = schema.validate({
                 date: tomorrow,
                 birthday: moment().subtract(2, 'day')
             });
@@ -1275,8 +1388,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #3", () => {
-            let result = schema.process({
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            let result = schema.validate({
                 date: today,
                 birthday: moment().add(2, 'day')
             });
@@ -1287,8 +1404,28 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #4", () => {
-            let result = schema.process({
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            let result = schema.validate({
+                date: "invalid-date",
+                birthday: moment()
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'date', message: `date must be a date`
+            });
+        });
+
+        it("validate Case #5", () => {
+            let schema = new Schema({
+                date: date().required().equals(today),
+                birthday: date().required().after(yesterday).before(tomorrow)
+            });
+            let result = schema.validate({
                 date: today,
                 birthday: moment()
             });
@@ -1299,16 +1436,12 @@ describe("Schema", () => {
 
     });
 
-    describe("process (Boolean)", () => {
-        let schema;
-
-        beforeAll(() => {
-            schema = new Schema({
+    describe("validate (Boolean)", () => {
+        it("Should Generate Schema", () => {
+            let schema = new Schema({
                 status: boolean().required().equals(false)
             });
-        });
 
-        it("Should Generate Schema", () => {
             expect(schema.schema["status"]).toBeTruthy();
             expect(schema.schema["status"].validators).toContainEqual({
                 validator: TYPES.BOOLEAN,
@@ -1324,7 +1457,11 @@ describe("Schema", () => {
         });
 
         it("Should Replace Fields", () => {
+            let schema = new Schema({
+                status: boolean().required().equals(false)
+            });
             schema.init();
+            
             expect(schema.schema["status"]).toBeTruthy();
             expect(schema.schema["status"].validators).toContainEqual({
                 validator: TYPES.BOOLEAN,
@@ -1339,8 +1476,11 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #1", () => {
-            let result = schema.process({});
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                status: boolean().required().equals(false)
+            });
+            let result = schema.validate({});
 
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
@@ -1348,8 +1488,11 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #2", () => {
-            let result = schema.process({
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                status: boolean().required().equals(false)
+            });
+            let result = schema.validate({
                 status: true
             });
 
@@ -1359,8 +1502,25 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #3", () => {
-            let result = schema.process({
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                status: boolean().required().equals(false)
+            });
+            let result = schema.validate({
+                status: "invalid"
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'status', message: "status must be a boolean"
+            });
+        });
+
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                status: boolean().required().equals(false)
+            });
+            let result = schema.validate({
                 status: false
             });
 
@@ -1370,17 +1530,13 @@ describe("Schema", () => {
 
     });
 
-    describe("process (Array)", () => {
-        let schema;
-
-        beforeAll(() => {
-            schema = new Schema({
+    describe("validate (Array)", () => {
+        it("Should Generate Schema", () => {
+            let schema = new Schema({
                 list1: array().required().contains(1).size(5),
                 list2: array().equals([1,2,3,4,5])
             });
-        });
 
-        it("Should Generate Schema", () => {
             expect(schema.schema["list1"]).toBeTruthy();
             expect(schema.schema["list1"].validators).toContainEqual({
                 validator: TYPES.ARRAY,
@@ -1410,7 +1566,12 @@ describe("Schema", () => {
         });
 
         it("Should Replace Fields", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
             schema.init();
+            
             expect(schema.schema["list1"]).toBeTruthy();
             expect(schema.schema["list1"].validators).toContainEqual({
                 validator: TYPES.ARRAY,
@@ -1439,8 +1600,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #1", () => {
-            let result = schema.process({});
+        it("validate Case #1", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+            let result = schema.validate({});
 
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
@@ -1448,8 +1613,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #2", () => {
-            let result = schema.process({
+        it("validate Case #2", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+            let result = schema.validate({
                 list1: [2,3,4,5],
                 list2: [1,2,3,4]
             });
@@ -1466,8 +1635,12 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #3", () => {
-            let result = schema.process({
+        it("validate Case #3", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+            let result = schema.validate({
                 list1: [1,2,3,4],
                 list2: [1,2,3,4,5]
             });
@@ -1478,8 +1651,31 @@ describe("Schema", () => {
             });
         });
 
-        it("process Case #4", () => {
-            let result = schema.process({
+        it("validate Case #4", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+            let result = schema.validate({
+                list1: [1,2,3,4],
+                list2: "invalid-2"
+            });
+
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: 'list1', message: "list1 must have 5 elements"
+            });
+            expect(result.errors).toContainEqual({
+                field: 'list2', message: "list2 must be an array"
+            });
+        });
+
+        it("validate Case #5", () => {
+            let schema = new Schema({
+                list1: array().required().contains(1).size(5),
+                list2: array().equals([1,2,3,4,5])
+            });
+            let result = schema.validate({
                 list1: [1,2,3,4,5],
                 list2: [1,2,3,4,5]
             });
@@ -1491,10 +1687,8 @@ describe("Schema", () => {
     });
 
     describe("validate", () => {
-        let schema;
-
-        beforeAll(() => {
-            schema = new Schema({
+        it("validate Case #1", () => {
+            let schema = new Schema({
                 name: string().required(),
                 email: string().required().email(),
                 phone_number: string().minlength(10),
@@ -1502,10 +1696,8 @@ describe("Schema", () => {
                 birthday: date().required(),
                 status: boolean().equals(true)
             });
-        });
-
-        it("validate Case #1", () => {
             let result = schema.validate({});
+            
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
                 field: "name", message: `name is required`
@@ -1519,11 +1711,20 @@ describe("Schema", () => {
         });
 
         it("validate Case #2", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
             let result = schema.validate({
                 name: "Biruk",
                 email: "invalid",
                 birthday: new Date()
             });
+
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
                 field: "email", message: `Email address is invalid`
@@ -1531,12 +1732,21 @@ describe("Schema", () => {
         });
 
         it("validate Case #3", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
             let result = schema.validate({
                 name: "Biruk",
                 email: "aderabiruk@gmail.com",
                 phone_number: "123456789",
                 birthday: new Date()
             });
+
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
                 field: "phone_number", message: `phone_number must have at least 10 characters`
@@ -1544,6 +1754,14 @@ describe("Schema", () => {
         });
 
         it("validate Case #4", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
             let result = schema.validate({
                 name: "Biruk",
                 email: "aderabiruk@gmail.com",
@@ -1552,6 +1770,7 @@ describe("Schema", () => {
                 birthday: new Date(),
                 status: false
             });
+
             expect(result.isValid).toBeFalsy();
             expect(result.errors).toContainEqual({
                 field: "age", message: `age must be greater than 18`
@@ -1562,6 +1781,14 @@ describe("Schema", () => {
         });
 
         it("validate Case #5", () => {
+            let schema = new Schema({
+                name: string().required(),
+                email: string().required().email(),
+                phone_number: string().minlength(10),
+                age: number().min(18),
+                birthday: date().required(),
+                status: boolean().equals(true)
+            });
             let result = schema.validate({
                 name: "Biruk",
                 email: "aderabiruk@gmail.com",
@@ -1569,9 +1796,211 @@ describe("Schema", () => {
                 age: 18,
                 birthday: new Date()
             });
+
+            expect(result.isValid).toBeTruthy();
+            expect(result.errors.length).toBe(0);
+        });
+    });
+
+    describe('validate (Object)', () => {
+        it("Case #1", () => {
+            let schema = new Schema({
+                name: array().size(10),
+                location: object({
+                    latitude: number().required(),
+                    longitude: number().required()
+                })
+            });
+            let result = schema.validate();
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "location.latitude",
+                message: "latitude is required"
+            });
+            expect(result.errors).toContainEqual({
+                field: "location.longitude",
+                message: "longitude is required"
+            }); 
+        });
+
+        it("Case #2", () => {
+            let schema = new Schema({
+                name: array().size(10),
+                location: object({
+                    latitude: number().required(),
+                    longitude: number().required()
+                })
+            });
+            let result = schema.validate({
+                name: "invalid",
+                location: {
+                    latitude: "invalid",
+                    longitude: 250
+                }
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "location.latitude",
+                message: "latitude must be a number"
+            });
+            expect(result.errors).toContainEqual({
+                field: "name",
+                message: "name must be an array"
+            }); 
+        });
+
+        it("Case #3", () => {
+            let schema = new Schema({
+                name: array().size(10),
+                location: object({
+                    latitude: number().required().min(0),
+                    longitude: number().required().min(0)
+                })
+            });
+            let result = schema.validate({
+                name: [1,2,3,4,5,6,7,8,9,0],
+                location: {
+                    latitude: -1,
+                    longitude: -1
+                }
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "location.latitude",
+                message: "latitude must be greater than 0"
+            });
+            expect(result.errors).toContainEqual({
+                field: "location.longitude",
+                message: "longitude must be greater than 0"
+            });
+        });
+
+        it("Case #4", () => {
+            let schema = new Schema({
+                name: array().size(10),
+                location: object({
+                    latitude: number().required().min(0),
+                    longitude: number().required().min(0)
+                })
+            });
+            let result = schema.validate({
+                name: [1,2,3,4,5,6,7,8,9,0],
+                location: {
+                    latitude: 0,
+                    longitude: 0
+                }
+            });
             expect(result.isValid).toBeTruthy();
             expect(result.errors.length).toBe(0);
         });
 
+        it("Case #5", () => {
+            let schema = new Schema({
+                name: string().required("Name is required"),
+                address: object({
+                    city: object({
+                        name: string().required("City is required")
+                    }),
+                    country: object({
+                        name: string().required("Country is required"),
+                        code: object({
+                            name: number().required("Code is required").integer()
+                        })
+                    })
+                })
+            });
+            let result = schema.validate({});
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "name",
+                message: "Name is required"
+            });
+            expect(result.errors).toContainEqual({
+                field: "address.city.name",
+                message: "City is required"
+            });
+            expect(result.errors).toContainEqual({
+                field: "address.country.name",
+                message: "Country is required"
+            });
+            expect(result.errors).toContainEqual({
+                field: "address.country.code.name",
+                message: "Code is required"
+            });
+        });
+
+        it("Case #6", () => {
+            let schema = new Schema({
+                name: string().required("Name is required"),
+                address: object({
+                    city: object({
+                        name: string().required("City is required")
+                    }),
+                    country: object({
+                        name: string().required("Country is required"),
+                        code: object({
+                            name: number().required("Code is required").integer()
+                        })
+                    })
+                })
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                address: {
+                    city: {
+                        name: []
+                    },
+                    country: {
+                        name: "Ethiopia",
+                        code: {
+                            name: 1.25
+                        }
+                    }
+                }
+            });
+            expect(result.isValid).toBeFalsy();
+            expect(result.errors).toContainEqual({
+                field: "address.city.name",
+                message: "name must be a string"
+            });
+            expect(result.errors).toContainEqual({
+                field: "address.country.code.name",
+                message: "name must be an integer"
+            });
+        });
+
+        it("Case #7", () => {
+            let schema = new Schema({
+                name: string().required("Name is required"),
+                address: object({
+                    city: object({
+                        name: string().required("City is required")
+                    }),
+                    country: object({
+                        name: string().required("Country is required"),
+                        code: object({
+                            name: number().required("Code is required").integer()
+                        })
+                    })
+                })
+            });
+            let result = schema.validate({
+                name: "Biruk",
+                address: {
+                    city: {
+                        name:"Addis Ababa"
+                    },
+                    country: {
+                        name: "Ethiopia",
+                        code: {
+                            name: 251
+                        }
+                    }
+                }
+            });
+            expect(result.isValid).toBeTruthy();
+            expect(result.errors.length).toBe(0);
+        });
     });
+    
 });

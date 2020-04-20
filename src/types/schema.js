@@ -1,4 +1,5 @@
 import { TYPES } from "../utils/constants";
+import { ObjectValidator } from './object';
 import { handleDateValidation } from "../validators/date";
 import { handleArrayValidation } from "../validators/array";
 import { handleNumberValidation } from "../validators/number";
@@ -10,8 +11,10 @@ import { handleBooleanValidation } from "../validators/boolean";
  */
 export default class Schema {
     
-    constructor(schema) {
+    constructor(schema, parent) {
+        this.errors = [];
         this.schema = schema;
+        this.parent = parent || "";
     }
 
     /**
@@ -20,17 +23,27 @@ export default class Schema {
      * @param {Object} data 
      */
     validate(data) {
-        this.init();
+        data = data || {};
+        this.init(data);
         return this.process(data);
     }
 
     /**
      * Initialize Schema
      */
-    init() {
+    init(data) {
         let keys = Object.keys(this.schema);
         for (const key of keys) {
-            this.sanitizeMessages(key, this.schema[key].validators);
+            if (this.schema[key] instanceof ObjectValidator) {
+                let parentSchema = this.parent ? `${this.parent}.${key}` : key;
+                this.errors = [
+                    ...this.errors,
+                    ...new Schema(this.schema[key].schema, parentSchema).validate(data[`${key}`]).errors
+                ];
+            }
+            else {
+                this.sanitizeMessages(key, this.schema[key].validators);
+            }
         }
     }
 
@@ -40,19 +53,18 @@ export default class Schema {
      * @param {Object} data 
      */
     process(data) {
-        let errors = [];
         let keys = Object.keys(this.schema);
         for (const field of keys) {
             for (const validator of this.schema[field].validators) {
-                errors = [
-                    ...errors,
+                this.errors = [
+                    ...this.errors,
                     ...this.handleValidation(field, validator, data)
                 ];
             }
         }
         return {
-            isValid: errors.length == 0,
-            errors: errors
+            isValid: this.errors.length == 0,
+            errors: this.errors
         };
     }
 
@@ -88,20 +100,22 @@ export default class Schema {
      * @param {Object} data
      */
     handleValidation(field, validator, data) {
+        let fieldName = this.parent ? `${this.parent}.${field}` : field;
+
         if (validator.validator === TYPES.ARRAY) {
-            return handleArrayValidation(field, validator, data[`${field}`]);
+            return handleArrayValidation(fieldName, validator, data[`${field}`]);
         }
         if (validator.validator === TYPES.BOOLEAN) {
-            return handleBooleanValidation(field, validator, data[`${field}`]);
+            return handleBooleanValidation(fieldName, validator, data[`${field}`]);
         }
         else if (validator.validator === TYPES.DATE) {
-            return handleDateValidation(field, validator, data[`${field}`]);
+            return handleDateValidation(fieldName, validator, data[`${field}`]);
         }
         else if (validator.validator === TYPES.NUMBER) {
-            return handleNumberValidation(field, validator, data[`${field}`]);
+            return handleNumberValidation(fieldName, validator, data[`${field}`]);
         }
         else if (validator.validator === TYPES.STRING) {
-            return handleStringValidation(field, validator, data[`${field}`]);
+            return handleStringValidation(fieldName, validator, data[`${field}`]);
         }
         else {
             return [];
