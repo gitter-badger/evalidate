@@ -9,6 +9,12 @@ import { string_type_error_message, array_type_error_message, integer_type_error
  */
 class ArrayValidator extends AbstractValidator {
 
+    /**
+     * Contains Validator
+     * 
+     * @param {Object} value 
+     * @param {String} message 
+     */
     contains(value, message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
@@ -17,6 +23,12 @@ class ArrayValidator extends AbstractValidator {
         return this;
     }
 
+    /**
+     * Equals Validator
+     * 
+     * @param {Array} value 
+     * @param {String} message 
+     */
     equals(value, message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
@@ -28,6 +40,11 @@ class ArrayValidator extends AbstractValidator {
         return this;
     }
 
+    /**
+     * Required Validator
+     *  
+     * @param {String} message 
+     */
     required(message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
@@ -36,6 +53,12 @@ class ArrayValidator extends AbstractValidator {
         return this;
     }
 
+    /**
+     * Size Validator
+     *  
+     * @param {Number} value
+     * @param {String} message 
+     */
     size(value, message) {
         if (message && !isString(message)) {
             throw new Error(string_type_error_message("message"));
