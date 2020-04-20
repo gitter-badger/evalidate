@@ -18,6 +18,11 @@ export const handleBooleanValidation = (field, validator, value) => {
                 break;
         }
     }
+    else if (value !== null && value !== undefined && !isBoolean(value)) {
+        if (validator.type == BOOLEAN_VALIDATOR_TYPES.TYPE) {
+            errors.push({field: field, message: validator.message});
+        }
+    }
     else {
         if (validator.type == BOOLEAN_VALIDATOR_TYPES.REQUIRED) {
             errors.push({field: field, message: validator.message});

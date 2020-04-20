@@ -28,6 +28,11 @@ export const handleArrayValidation = (field, validator, value) => {
                 }
         }
     }
+    else if (value !== null && value !== undefined && !isArray(value)) {
+        if (validator.type == ARRAY_VALIDATOR_TYPES.TYPE) {
+            errors.push({field: field, message: validator.message});
+        }
+    }
     else {
         if (validator.type == ARRAY_VALIDATOR_TYPES.REQUIRED) {
             errors.push({field: field, message: validator.message});

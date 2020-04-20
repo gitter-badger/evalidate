@@ -39,6 +39,11 @@ export const handleStringValidation = (field, validator, value) => {
                 break;
         }
     }
+    else if (value && !isString(value)) {
+        if (validator.type == STRING_VALIDATOR_TYPES.TYPE) {
+            errors.push({field: field, message: validator.message});
+        }
+    }
     else {
         if (validator.type == STRING_VALIDATOR_TYPES.REQUIRED) {
             errors.push({field: field, message: validator.message});

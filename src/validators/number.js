@@ -38,6 +38,11 @@ export const handleNumberValidation = (field, validator, value) => {
                 break;
         }
     }
+    else if (value !== null && value !== undefined && !isNumber(value)) {
+        if (validator.type == NUMBER_VALIDATOR_TYPES.TYPE) {
+            errors.push({field: field, message: validator.message});
+        }
+    }
     else {
         if (validator.type == NUMBER_VALIDATOR_TYPES.REQUIRED) {
             errors.push({field: field, message: validator.message});

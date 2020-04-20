@@ -29,6 +29,11 @@ export const handleDateValidation = (field, validator, value) => {
                 break;
         }
     }
+    else if (value && !isDate(value)) {
+        if (validator.type == DATE_VALIDATOR_TYPES.TYPE) {
+            errors.push({field: field, message: validator.message});
+        }
+    }
     else {
         if (validator.type == DATE_VALIDATOR_TYPES.REQUIRED) {
             errors.push({field: field, message: validator.message});
@@ -43,5 +48,5 @@ export const handleDateValidation = (field, validator, value) => {
  * @param {Object} value 
  */
 export const isDate = (value) => {
-    return moment(value).isValid();
+    return value && moment(value).isValid();
 };

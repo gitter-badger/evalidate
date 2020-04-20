@@ -10,19 +10,22 @@ export const ARRAY_VALIDATOR_TYPES = {
     CONTAINS: "contains",
     EQUAL: "equal",
     REQUIRED: "required",
-    SIZE: "size"
+    SIZE: "size",
+    TYPE: "type"
 };
 
 export const BOOLEAN_VALIDATOR_TYPES = {
     EQUAL: "equal",
-    REQUIRED: "required"
+    REQUIRED: "required",
+    TYPE: "type"
 };
 
 export const DATE_VALIDATOR_TYPES = {
     AFTER: "after",
     BEFORE: "before",
     EQUAL: "equal",
-    REQUIRED: "required"
+    REQUIRED: "required",
+    TYPE: "type"
 };
 
 export const NUMBER_VALIDATOR_TYPES = {
@@ -32,6 +35,7 @@ export const NUMBER_VALIDATOR_TYPES = {
     MAX: "max",
     MIN: "min",
     REQUIRED: "required",
+    TYPE: "type"
 };
 
 export const STRING_VALIDATOR_TYPES = {
@@ -41,4 +45,5 @@ export const STRING_VALIDATOR_TYPES = {
     MAXLENGTH: "maxlength",
     MINLENGTH: "minlength",
     REQUIRED: "required",
+    TYPE: "type"
 };
