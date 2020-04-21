@@ -7,7 +7,7 @@
 [![npm version](https://badge.fury.io/js/evalidate.svg)](https://badge.fury.io/js/evalidate)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/aderabiruk/evalidate)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/aderabiruk/evalidate/issues)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) [![Join the chat at https://gitter.im/evalidate-community/community](https://badges.gitter.im/evalidate-community/community.svg)](https://gitter.im/evalidate-community/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A fast and easy to use Object Schema Validator
 
